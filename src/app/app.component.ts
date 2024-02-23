@@ -5,6 +5,4 @@ import { Component } from '@angular/core';
 
   template: ` <router-outlet></router-outlet> `,
 })
-export class AppComponent {
-  title = 'projeto-pratico2-PokedexAPI';
-}
+export class AppComponent {}

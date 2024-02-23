@@ -1,0 +1,7 @@
+// Converter pixel para rem
+// Esta função calcula o valor dos px para rem sempre que é usada, sabemos que 1rem são 16 px entao quando passamos o valor ele ja faz a divisao para nós
+
+@function rem-calc($size) {
+  $value: $size/16;
+  @return #{$value}rem;
+}

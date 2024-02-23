@@ -1,0 +1,10 @@
+@import "../../../config-scss/rem-calc.scss";
+// A tag host serve para dizer que estamos mexendo em tudo porem apenas dentro deste componente, se esta tag for usada em outro componente nao ira afetar em nada essa configuração e vice versa:
+:host {
+  header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: rem-calc(40);
+  }
+}

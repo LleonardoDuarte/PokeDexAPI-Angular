@@ -1,10 +1,19 @@
-/* You can add global styles to this file, and also import other style files */
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
+@import "./config-scss/color-variables.scss";
+@import "./config-scss/rem-calc.scss";
+@import "./config-scss/reset.scss";
+
+html {
+  font-family: "Robot", sans-serif;
+  background-color: var(--background-color);
 }
 
-body {
-  height: 100%;
+main {
+  width: rem-calc(600);
+  margin: 0 auto;
+  box-sizing: border-box;
+
+  @media screen and (max-width: 620px) {
+    width: rem-calc(280);
+    margin: auto;
+  }
 }

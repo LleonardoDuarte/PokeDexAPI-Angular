@@ -318,7 +318,7 @@ O options é usado quando quero que seja acionado a classe quando apenas exatame
   Nesse caso acima minha rota tem id e username
 
 <<<<<<< HEAD
-  OBS: Para que possamos verificar os valores como res.valor é necessario no arquivo tsconfig.json colocar de true para false o seguinte parametro: "noPropertyAccessFromIndexSignature": false, se ele estiver true voce so conseguirá acessar o valor atraves de um array res.['valor']
+OBS: Para que possamos verificar os valores como res.valor é necessario no arquivo tsconfig.json colocar de true para false o seguinte parametro: "noPropertyAccessFromIndexSignature": false, se ele estiver true voce so conseguirá acessar o valor atraves de um array res.['valor']
 
 - Para acessar a rota com sucesso devemos passar na rota o id e o username exemplo:
   http://localhost:4200/parametrizada/1/leonardoDuarte
@@ -369,7 +369,6 @@ O options é usado quando quero que seja acionado a classe quando apenas exatame
 - Para acessar a rota com sucesso devemos passar na rota o id e o username exemplo:
   http://localhost:4200/parametrizada/1/leonardoDuarte
 
-
 # Sobre rotas e mudança de página no angular
 
 - Para realizar a mudança de página no angular cria-se uma nova rota no arquivo app routes e o path devera ser o que voce deseja que seja colocado no / e no component devera ser o novo componente, exemplo de duas rotas:
@@ -398,4 +397,24 @@ Apartir dai quando se clicar no botao ele direcionara para a página desejada
 
 # API PokeDex
 
-- 
+- Para começar importamos copiamos um reset especifico de um site para o reset geral do scss, o site é :https://meyerweb.com/eric/tools/css/reset/, depois setamos as colors em outro arquivo scss atraves do :root e criamos um novo arquivo scss de calculo de pixels para rem, para usarmos apenas rem nesse projeto, com isso chamamos os tres arquivos para o nosso styles.scss atraves do @use
+
+- Primeira parce criamos um modulo home dentro de pages, depois criamos o componente home dentro de pages, após a criação do component criamos outro arquivo dentro de pages chamado routing.module.ts onde iremos criar uma rota padrao usando forChild no nosso ngModule, Apartir disso criamos uma rota forChildren no nosso app-routing-module.ts e chamamos nosso pages.module.ts que está com o import do routing module.
+
+- Observação importante, nos próximos componentes a serem criados, como usamos uma rota filha para chamar nosso home component ele irá pedir especificação de qual module devemos usar, para isso usamos --module e o nome antes de colocar as pastas, exemplo: ng g c --module pages pages/details. Ao criar este novo componente devemos criar uma rota para ele no arquivo routing module ts e confirmar se ele está importado e declarado no nosso home module.
+
+- No próximo passo criamos outro module chamado shared que será responsavel pelas informaçoes compartilhadas, o shared module deve ser importado no nosso module pages que está cuidando da home, no module shared criamos um componente para a header, outro para a barra search e outro para o main do site que no caso é a lista, exportamos eles no nosso module shared. Após isso devemos importar o seletor deles dentro da nossa home html e apartir dai ira funcionar.
+
+- Uma informação importante sobre o sass é que no uso do @import pode acontecer erro pois os sass está descontinuando o us
+  o do @import e substituindo por @use, devemos sempre conferir se o seletor que escolhemos para usar está funcionando ou não.
+
+- Depois de todas as estilizações é a parte de trazer a API, para isso criamos um server chamado pokeAPI, antes de realizar as configurações na pokeAPI devemos importar o httpClientModule (import {HttpClientModule} from '@angular/common/http') e coloca-lo nos imports do nosso module principal que é o app.module.ts
+
+- No nosso server pokeAPI iremos fazer uma injeção de dependencia no constructor chamando o httpClient (private http:HttpClient), apos isso criaremos uma função porem ao inves de usarmos public iremos usar o get também funciona, precisamos tambem adicionar um observable para ficar escutando, no caso da tipagem do observable devido a api ser muito grande o profesor decidiu nao tipar para nao complicar mais e usar apenas any.
+  get apiListAllPokemons(): Observable<any> {
+  return this.http.get<any>(this.url);
+  }
+
+- Importante, nesse caso especifico a nossa url so retorna o nome do pokemon e um link para as outras informaçoes, nesse caso para pegar as informaçoes dessa nova url usaremos um método do rxjs chamado tap, que tem função parecida com o map() porem podemos nele adicionar próximos passos, que nesse caso iremos dar o get na api e como proximo passo entrar na url das informaçoes dos pokemons.
+
+- Após isso devemos importar nosso service no nosso componente lista que ira receber as informaçoes dos pokemons, o importa acontece por injeção de dependencia no constructor (private pokeApiService: PokeApiService) e depois instanciamos no nosso ngOnInit: this.pokeApiService.apiListAllPokemons.subscribe((res) => res);, apartir dai ele ja irá exibir as informaçoes iniciais da api no log
