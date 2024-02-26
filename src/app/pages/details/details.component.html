@@ -1,1 +1,40 @@
-<p>details works!</p>
+<!-- Header -->
+<poke-header></poke-header>
+<main>
+  <ng-template [ngIf]="isLoading">
+    <section class="pokemon-names">
+      <h1 class="slideInRight">{{ pokemon[0].name }}</h1>
+      <h2>{{ pokemon[1].names[0].name }}</h2>
+    </section>
+
+    <section class="pokemon-status">
+      <img
+        [src]="pokemon[0].sprites.other.dream_world.front_default"
+        [alt]="pokemon[0].name"
+        class="slideInLeft"
+      />
+
+      <article class="pokemon-status-statistic">
+        <section>
+          <h3 class="flipInX">Estatística</h3>
+          <ol>
+            <li *ngFor="let value of pokemon[0].stats" class="bounceIn">
+              {{ value.stat.name }}
+              <strong>
+                {{ value.base_stat }}
+              </strong>
+            </li>
+          </ol>
+        </section>
+
+        <a [routerLink]="['']" class="btn btn-secondary">Voltar</a>
+      </article>
+    </section>
+  </ng-template>
+
+  <img
+    src="../../../assets/Error.png"
+    alt="Página de erro"
+    *ngIf="!isLoading"
+  />
+</main>

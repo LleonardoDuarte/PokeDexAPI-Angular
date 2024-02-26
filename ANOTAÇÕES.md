@@ -417,4 +417,56 @@ Apartir dai quando se clicar no botao ele direcionara para a página desejada
 
 - Importante, nesse caso especifico a nossa url so retorna o nome do pokemon e um link para as outras informaçoes, nesse caso para pegar as informaçoes dessa nova url usaremos um método do rxjs chamado tap, que tem função parecida com o map() porem podemos nele adicionar próximos passos, que nesse caso iremos dar o get na api e como proximo passo entrar na url das informaçoes dos pokemons.
 
-- Após isso devemos importar nosso service no nosso componente lista que ira receber as informaçoes dos pokemons, o importa acontece por injeção de dependencia no constructor (private pokeApiService: PokeApiService) e depois instanciamos no nosso ngOnInit: this.pokeApiService.apiListAllPokemons.subscribe((res) => res);, apartir dai ele ja irá exibir as informaçoes iniciais da api no log
+- Após isso devemos importar nosso service no nosso componente lista que ira receber as informaçoes dos pokemons, o importa acontece por injeção de dependencia no constructor (private pokeApiService: PokeApiService) e depois instanciamos no nosso ngOnInit: this.pokeApiService.apiListAllPokemons.subscribe((res) => res);, apartir dai ele ja irá exibir as informaçoes iniciais da api no log, como foi identificado que ele trouxe os dados da api pelo console log, podemos agora entao fazer um map para poder pegar os dados dos pokemons avançando na api
+
+- Para que consigamos realizar o direcionamento das rotas quando clicarmos no card de cada pokemon, na rota details adicionaremos o /:id para que ele possa puxar pelo id do pokemon. Após isso chamamos um [routerlink]='' no nosso A que contem todo conteudo e colocamos como parametro nossa 'details' porem com nosso pokemon que está armazenando cada id, ficaria assim: <a [routerLink]="['details',pokemon.status.id]" >
+
+- Para que possamos receber os dados dos pokemons na página details, primeiramente iremos ter de importar o ActivatedRouter como injeção de dependencia no constructor para podermos atraves dele recuperar o id do pokemon, Após isso criamos um método para poder resgatar o id:
+  get pokemon() {
+  const id = this.activatedRouter.snapshot.params['id'];
+  return console.log(id);
+  }
+
+  - Após isso para que consigamos resgatar os dados dos pokemons precisamos criar as url's onde estão armazenados os dados dos pokemons, nesse caso trazemos a url de pokemon e name:
+    private urlPokemon = 'https://pokeapi.co/api/v2/pokemon';
+    private urlName = 'https://pokeapi.co/api/v2/pokemon-species';
+
+  Depois chamamos estas url's dentro do nosso método:
+  get pokemon() {
+  const id = this.activatedRouter.snapshot.params['id'];
+  const pokemon = this.pokeApiService.apiGetPokemons(
+  `${this.urlPokemon}/${id}`
+  );
+  const name = this.pokeApiService.apiGetPokemons(`${this.urlName}/${id}`);
+  return console.log(id, pokemon, name);
+  }
+
+  - Após isso iremos trabalhar com forkJoin que é um método da biblioteca rxjs e que tem como função realizar buscas ao mesmo tempo, nesse caso especifico ele servirá para buscar as duas url's ao mesmo tempo sem precisar de utilização do subscribe varias vezes:
+    get pokemon() {
+    const id = this.activatedRouter.snapshot.params['id'];
+    const pokemon = this.pokeApiService.apiGetPokemons(
+    `${this.urlPokemon}/${id}`
+    );
+    const name = this.pokeApiService.apiGetPokemons(`${this.urlName}/${id}`);
+
+    return forkJoin([pokemon, name]).subscribe((res) => {
+    console.log(res);
+    });
+
+    - Com isso nós ja consigamos resgatar as informaçoes do pokemon utilizando o id especifico dele, apos isso ao inves de printarmos as informaçoes no logo nos iremos passar esse valor res para nossa declaração pokemon e apartir dai usar no HTML.
+      get getPokemon() {
+      const id = this.activatedRouter.snapshot.params['id'];
+      const pokemon = this.pokeApiService.apiGetPokemons(
+      `${this.urlPokemon}/${id}`
+      );
+      const name = this.pokeApiService.apiGetPokemons(`${this.urlName}/${id}`);
+
+    return forkJoin([pokemon, name]).subscribe((res) => {
+    this.pokemon = res;
+    this.isLoading = true;
+    });
+    }
+
+  - Para o tratamento dos erros que irão aparecer no HTML mediante a o carregamento onde o angular ja irá sair verificando tudo mesmo antes de carregar, iremos colocar todo nosso codigo html em um <ng-template> onde teremos um if que será nossa declaração isLoading, quando isLoading ainda estiver true ele nao exibirá nada até que tudo seja carregado e verificado, assim apos isso nos carregamos as informaçoes e previmos os erros, ficou assim: <nf-template [ngIf]="isLoading">O isLoading so passará como true quando nosso pokemon receber as informaçoes, por isso colocanos ele como true no método acima.
+
+  - Para estilizar algumas animações retiramos algmas animações do site https://www.theappguruz.com/tag-tools/web/CSSAnimations/ e criamos um novo arquivo scss nas nossas configs de scss e importamos no nosso styles para pdoer usar.

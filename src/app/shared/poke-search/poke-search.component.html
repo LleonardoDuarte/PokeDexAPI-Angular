@@ -1,4 +1,10 @@
 <form>
-  <input type="text" name="" placeholder="Buscar Pokemon..." />
+  <!-- Nesse caso o uso da # é para que no search posso pegar o valor do proprio input, ou seja, tudo o que digitarmos será recebido pelo método -->
+  <input
+    type="text"
+    #input
+    (keyup)="search(input.value)"
+    placeholder="Buscar Pokemon..."
+  />
   <img src="../../../assets/Search.png" alt="buscar pokemon" />
 </form>

@@ -4,57 +4,83 @@
 $padding: rem-calc(20);
 
 :host {
-  display: flex;
-  justify-content: space-between;
-  .pokemon {
-    background-color: var(--white);
+  .listagem {
     display: flex;
-    width: calc(47% - 2.5rem);
-    height: rem-calc(157 -40);
-    border-radius: rem-calc(10);
-    padding: $padding;
-    margin: 20px auto;
-    position: relative;
-    &-infos {
-      h2 {
-        font-size: rem-calc(22);
-        font-style: italic;
-        font-weight: 700;
-        color: var(--pokemon-title-color);
-        margin-bottom: rem-calc(5);
-      }
-      ul {
-        display: flex;
-        flex-direction: column;
-        color: var(--pokemon-title-color);
-      }
-
-      li {
-        background-color: var(--cinza);
-        font-size: rem-calc(10);
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: rem-calc(60);
-        border-radius: rem-calc(50);
-        margin-bottom: rem-calc(5);
-        padding: rem-calc(5);
-      }
-    }
-    &-image {
+    justify-content: space-between;
+    flex-wrap: wrap;
+    .pokemon {
+      background-color: var(--white);
       display: flex;
-      align-items: center;
-      justify-content: center;
-      position: absolute;
-      bottom: rem-calc(10);
-      right: rem-calc(20);
-      height: rem-calc(90);
-      width: rem-calc(110);
-      background: url("../../../assets/Bolinhas.png") no-repeat;
-    }
+      width: calc(47% - 2.5rem);
+      height: rem-calc(157 -40);
+      border-radius: rem-calc(10);
+      padding: $padding;
+      margin: 20px auto;
+      position: relative;
+      @media screen and (max-width: 620px) {
+      }
+      &-infos {
+        h2 {
+          font-size: rem-calc(22);
+          font-style: italic;
+          font-weight: 700;
+          color: var(--pokemon-title-color);
+          margin-bottom: rem-calc(5);
 
-    img {
-      width: rem-calc(80);
+          @media screen and (max-width: 620px) {
+            font-size: rem-calc(12);
+            margin-bottom: rem-calc(10);
+          }
+        }
+        ul {
+          display: flex;
+          flex-direction: column;
+          color: var(--pokemon-title-color);
+        }
+
+        li {
+          background-color: var(--cinza);
+          font-size: rem-calc(10);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          width: rem-calc(60);
+          border-radius: rem-calc(50);
+          margin-bottom: rem-calc(5);
+          padding: rem-calc(5);
+          @media screen and (max-width: 620px) {
+            font-size: rem-calc(5);
+            display: flex;
+            justify-content: flex-start;
+            width: rem-calc(30);
+          }
+        }
+      }
+      &-image {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: rem-calc(20);
+        right: rem-calc(20);
+        width: rem-calc(100);
+        background: url("../../../assets/Bolinhas.png") no-repeat;
+
+        @media screen and (max-width: 620px) {
+          height: rem-calc(30);
+          width: rem-calc(10);
+          display: flex;
+          bottom: rem-calc(35);
+          right: rem-calc(20);
+        }
+      }
+
+      img {
+        width: rem-calc(50);
+        @media screen and (max-width: 620px) {
+          width: rem-calc(30);
+        }
+      }
     }
   }
 }

@@ -1,0 +1,97 @@
+@import "../../../config-scss/rem-calc.scss";
+@import "../../../config-scss/color-variables.scss";
+
+:host {
+  main {
+    margin-top: rem-calc(40);
+
+    @media screen and (max-width: 390px) {
+      margin-top: rem-calc(5);
+    }
+  }
+
+  .pokemon-names {
+    position: relative;
+    display: flex;
+    align-items: flex-end;
+    justify-content: flex-end;
+    height: rem-calc(75);
+    padding: 0 rem-calc(30);
+
+    h1 {
+      color: var(--white);
+      font-size: rem-calc(32);
+      text-transform: capitalize;
+    }
+    h2 {
+      position: absolute;
+      font-weight: 100;
+      top: 0;
+      font-size: rem-calc(60);
+      color: rgba(255, 255, 255, 0.1);
+    }
+  }
+  .pokemon-status {
+    position: relative;
+    img {
+      position: absolute;
+      top: rem-calc(-90);
+      left: rem-calc(20);
+      max-width: rem-calc(130);
+
+      @media screen and(max-width:620px) {
+        left: rem-calc(-10);
+        max-width: rem-calc(90);
+        top: rem-calc(-40);
+      }
+    }
+    &-statistic {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      background: var(--white);
+      min-height: 43.9vh;
+      margin-top: rem-calc(10);
+      padding: rem-calc(100) rem-calc(35) rem-calc(30);
+      border-radius: rem-calc(50) rem-calc(50) 0 0;
+
+      h3 {
+        margin-bottom: rem-calc(20);
+        font-style: italic;
+        font-size: rem-calc(32);
+        text-decoration: underline;
+        color: var(--button-return-color);
+        font-weight: 700;
+      }
+
+      ol {
+        li {
+          display: flex;
+          justify-content: space-between;
+          font-size: rem-calc(18);
+          line-height: 130%;
+        }
+      }
+      a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border: none;
+        border-radius: rem-calc(15);
+        padding: rem-calc(10) 0;
+        font-size: rem-calc(20);
+        background-color: var(--button-return-color);
+        color: var(--white);
+        text-decoration: none;
+        outline: none;
+        cursor: pointer;
+        font-weight: 400;
+
+        @media screen and (max-width: 390px) {
+          font-size: rem-calc(10);
+          padding: rem-calc(5) 0;
+        }
+      }
+    }
+  }
+}
